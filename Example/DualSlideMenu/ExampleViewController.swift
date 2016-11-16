@@ -13,4 +13,7 @@ class ExampleViewController: UIViewController, DualSlideMenuViewControllerDelega
     func onSwipe() {
         print("did swipe")
     }
+    func didChangeView() {
+        print("view did change")
+    }
 }

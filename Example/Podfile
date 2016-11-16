@@ -1,11 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'DualSlideMenu_Example' do
   pod 'DualSlideMenu', :path => '../'
 end
 
-target 'DualSlideMenu_Tests', :exclusive => true do
+target 'DualSlideMenu_Tests' do
   pod 'DualSlideMenu', :path => '../'
 end

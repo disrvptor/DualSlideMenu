@@ -92,8 +92,8 @@ class DualSlideMenu_ExampleUITests: XCTestCase {
     }
     
     
-    private func dispatchAsyncExpectation(direction: String, type: State, instance: DualSlideMenuViewController) {
-        expect = expectationWithDescription("Waiting for asynchronous animation to finish")
+    fileprivate func dispatchAsyncExpectation(_ direction: String, type: State, instance: DualSlideMenuViewController) {
+        expect = expectation(description: "Waiting for asynchronous animation to finish")
         instance.toggle(direction)
         waitForExpectationsWithTimeout(1) { _ in
             XCTAssertEqual(type, instance.currentState)
