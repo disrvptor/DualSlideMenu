@@ -18,11 +18,11 @@ class LeftViewController: UIViewController {
         super.viewDidLoad()
 
         button.layer.cornerRadius = 6
-        button.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.6)
-        button.tintColor =  UIColor.brownColor()
+        button.backgroundColor = UIColor.red.withAlphaComponent(0.6)
+        button.tintColor =  UIColor.brown
     }
     
-    @IBAction func buttonClicked(sender: AnyObject) {
+    @IBAction func buttonClicked(_ sender: AnyObject) {
         controller.toMain()
     }
 
