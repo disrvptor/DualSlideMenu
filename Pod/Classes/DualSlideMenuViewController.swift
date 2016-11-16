@@ -16,8 +16,8 @@ public enum State {
 
 @objc
 public protocol DualSlideMenuViewControllerDelegate {
-    optional func onSwipe()
-    optional func didChangeView()
+    @objc optional func onSwipe()
+    @objc optional func didChangeView()
 }
 public class DualSlideMenuViewController: UIViewController {
     
@@ -40,8 +40,8 @@ public class DualSlideMenuViewController: UIViewController {
         mainView = mainViewController
         leftMenu = leftMenuViewController
         
-        addSwipeGestures(mainView)
-        view.insertSubview(mainView.view, atIndex: 0) // adds main view at the bottom
+        addSwipeGestures(mainView: mainView)
+        view.insertSubview(mainView.view, at: 0) // adds main view at the bottom
         view.insertSubview(leftMenu.view, belowSubview: mainView.view)
         amountOfMenus = 1;
         menuType = .Left
@@ -53,8 +53,8 @@ public class DualSlideMenuViewController: UIViewController {
         mainView = mainViewController
         rightMenu = rightMenuViewController
         
-        addSwipeGestures(mainView)
-        view.insertSubview(mainView.view, atIndex: 0) // adds main view at the bottom
+        addSwipeGestures(mainView: mainView)
+        view.insertSubview(mainView.view, at: 0) // adds main view at the bottom
         view.insertSubview(rightMenu.view, belowSubview: mainView.view)
         amountOfMenus = 1;
         menuType = .Right
@@ -75,8 +75,8 @@ public class DualSlideMenuViewController: UIViewController {
         leftMenu = leftMenuViewController
         rightMenu = rightMenuViewController
         
-        addSwipeGestures(mainView)
-        view.insertSubview(mainView.view, atIndex: 0) // adds main view at the bottom
+        addSwipeGestures(mainView: mainView)
+        view.insertSubview(mainView.view, at: 0) // adds main view at the bottom
         view.insertSubview(rightMenu.view, belowSubview: mainView.view) // stacks subview in order
         view.insertSubview(leftMenu.view, belowSubview: rightMenu.view) // the two subviews are added in this order, but makes no real noticeable difference
         amountOfMenus = 2;
@@ -91,8 +91,8 @@ public class DualSlideMenuViewController: UIViewController {
      */
     private func addSwipeGestures(mainView: UIViewController) {
         // creates two swipe gesture recognizers for the two side menus
-            let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(DualSlideMenuViewController.handleSwipes(_:)))
-            let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(DualSlideMenuViewController.handleSwipes(_:)))
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(DualSlideMenuViewController.handleSwipes(_:)))
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(DualSlideMenuViewController.handleSwipes(_:)))
         // assigns correct direction for the two recognizers even though the names are confusing
         leftSwipe.direction = .Left
         rightSwipe.direction = .Right
@@ -120,11 +120,11 @@ public class DualSlideMenuViewController: UIViewController {
      */
     func handleSwipes(sender:UISwipeGestureRecognizer) {
         // determines swipe direction from input and acts accordingly
-        if (sender.direction == .Left) {
-            toggle("left")
+        if (sender.direction == .left) {
+            toggle(swipeDirection: "left")
         }
-        else if (sender.direction == .Right){
-            toggle("right")
+        else if (sender.direction == .right){
+            toggle(swipeDirection: "right")
         }
         delegate?.onSwipe!()
     }
@@ -141,19 +141,19 @@ public class DualSlideMenuViewController: UIViewController {
         case .Main :
             //Swipe left to open right panel
             if (swipeDirection == "left") {
-                if menuType == .Right || amountOfMenus == 2 { moveToView(true, type: .Right) }
-                if amountOfMenus == 2 { swapPanels(.Right) }
+                if menuType == .Right || amountOfMenus == 2 { moveToView(open: true, type: .Right) }
+                if amountOfMenus == 2 { swapPanels(type: .Right) }
             }
                 //Swipe right to open left panel
             else if (swipeDirection == "right") {
-                if menuType == .Left || amountOfMenus == 2 { moveToView(true, type: .Left) }
-                if amountOfMenus == 2 { swapPanels(.Left) }
+                if menuType == .Left || amountOfMenus == 2 { moveToView(open: true, type: .Left) }
+                if amountOfMenus == 2 { swapPanels(type: .Left) }
             }
             break
         case .Left :
             //Swipe left to close left panel
             if (swipeDirection == "left") {
-                moveToView(false, type: .Left)
+                moveToView(open: false, type: .Left)
             } else {
                 collapseAll()
             }
@@ -161,7 +161,7 @@ public class DualSlideMenuViewController: UIViewController {
         case .Right :
             //Swipe right to close right panel
             if (swipeDirection == "right") {
-                moveToView(false, type: .Right)
+                moveToView(open: false, type: .Right)
             } else {
                 collapseAll()
             }
@@ -180,9 +180,9 @@ public class DualSlideMenuViewController: UIViewController {
     public func toMain(completion: ((Bool) -> Void)! = nil) {
         // the animation has a duration of 0, so nothing is actually be animated
         // everthing is instantaneous
-        UIView.animateWithDuration(0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.mainView.view.frame.origin.x = 0
-            }, completion: completion)
+        }, completion: completion)
         currentState = .Main
     }
     
@@ -193,8 +193,8 @@ public class DualSlideMenuViewController: UIViewController {
     public func toLeft() {
         if (amountOfMenus == 2 || menuType == .Left) {
             //Calculate the amount of distance the main view needs to move
-            let displacement = CGRectGetWidth(mainView.view.frame) - leftSideOffset
-            animateInstantly(displacement)
+            let displacement = mainView.view.frame.width - leftSideOffset
+            animateInstantly(displacement: displacement)
             currentState = .Left
         }
     }
@@ -205,8 +205,8 @@ public class DualSlideMenuViewController: UIViewController {
     public func toRight() {
         if (amountOfMenus == 2 || menuType == .Right) {
             //Calculate the amount of distance the main view needs to move
-            let displacement = rightSideOffset - CGRectGetWidth(mainView.view.frame)
-            animateInstantly(displacement)
+            let displacement = rightSideOffset - mainView.view.frame.width
+            animateInstantly(displacement: displacement)
             currentState = .Right
         }
     }
@@ -219,9 +219,9 @@ public class DualSlideMenuViewController: UIViewController {
     public func collapseAll() {
         // conditional all ends in main view, just determines which animation to do so
         if currentState == .Left {
-            moveToView(false, type: .Left)
+            moveToView(open: false, type: .Left)
         } else if currentState == .Right {
-            moveToView(false, type: .Right)
+            moveToView(open: false, type: .Right)
         }
     }
     /**
@@ -252,19 +252,19 @@ public class DualSlideMenuViewController: UIViewController {
             var displacement: CGFloat = 0
             //Calculate the amount of distance the main view needs to move
             if (type == .Left) {
-                displacement = CGRectGetWidth(mainView.view.frame) - leftSideOffset
+                displacement = mainView.view.frame.width - leftSideOffset
             }
             else if (type == .Right) {
-                displacement = rightSideOffset - CGRectGetWidth(mainView.view.frame)
+                displacement = rightSideOffset - mainView.view.frame.width
             }
-            moveMainViewBy(displacement) { _ in
+            moveMainViewBy(xDisplacement: displacement) { _ in
                 self.currentState = type
                 self.delegate?.didChangeView!()
             }
         }
         else {
             //Move back to main view
-            moveMainViewBy(0) { _ in
+            moveMainViewBy(xDisplacement: 0) { _ in
                 self.currentState = .Main
                 self.delegate?.didChangeView!()
             }
@@ -281,14 +281,14 @@ public class DualSlideMenuViewController: UIViewController {
      */
     private func moveMainViewBy(xDisplacement: CGFloat, completion: ((Bool) -> Void)! = nil) {
         //Animate with a spring damping coefficient of 0.8
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.mainView.view.frame.origin.x = xDisplacement
-            }, completion: completion)
+        }, completion: completion)
     }
     
     private func animateInstantly(displacement: CGFloat) {
-        UIView.animateWithDuration(0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.mainView.view.frame.origin.x = displacement
-            }, completion: nil)
+        }, completion: nil)
     }
 }
