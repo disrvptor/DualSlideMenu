@@ -1,6 +1,6 @@
 {
   "name": "DualSlideMenu",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "summary": "Swipe to the left or right for a table view",
   "description": "Allows the main view of an app to be clutter free by placing all the navigation and buttons in side menus that can be easily reached by swiping to the left or right",
   "homepage": "https://github.com/vinnyoodles/DualSlideMenu",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/disrvptor/DualSlideMenu.git",
-    "tag": "1.7.4"
+    "tag": "1.7.5"
   },
   "platforms": {
     "ios": "9.0"

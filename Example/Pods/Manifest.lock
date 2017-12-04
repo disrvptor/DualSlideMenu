@@ -1,5 +1,5 @@
 PODS:
-  - DualSlideMenu (1.7.4)
+  - DualSlideMenu (1.7.5)
 
 DEPENDENCIES:
   - DualSlideMenu (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  DualSlideMenu: 15baf5734052be7b02c99094257e534d8f27396d
+  DualSlideMenu: 55c2e7649bf8e04a299070b38945ae28c18d1c51
 
 PODFILE CHECKSUM: da8305036a6ae72ddb1a331ab5661fdb33515a32
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.3.1

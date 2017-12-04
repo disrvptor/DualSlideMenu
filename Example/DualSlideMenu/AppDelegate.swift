@@ -50,10 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func menuButtonTapped(_ sender: UIBarButtonItem){
+    @objc func menuButtonTapped(_ sender: UIBarButtonItem){
         controller?.toggle("right")
     }
-    func composeButtonTapped(_ sender: UIBarButtonItem){
+    @objc func composeButtonTapped(_ sender: UIBarButtonItem){
         controller?.toggle("left")
     }
 

@@ -1,5 +1,11 @@
 # DualSlideMenu
 
+## This Fork
+This fork doesn't add functionality, but keeps this project up to date with the latest versions of Xcode and Swift
+
+* v1.7.5 - Xcode 9, Swift 4
+* v1.7.4 - Xcode 8, Swift 3
+
 [![Version](https://img.shields.io/cocoapods/v/DualSlideMenu.svg?style=flat)](http://cocoapods.org/pods/DualSlideMenu)
 [![Build Status](https://travis-ci.org/vinnyoodles/DualSlideMenu.svg?branch=master)](https://travis-ci.org/vinnyoodles/DualSlideMenu)
 [![codecov](https://codecov.io/gh/vinnyoodles/DualSlideMenu/branch/master/graph/badge.svg)](https://codecov.io/gh/vinnyoodles/DualSlideMenu)

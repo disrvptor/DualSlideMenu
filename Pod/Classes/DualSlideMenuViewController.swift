@@ -118,7 +118,7 @@ open class DualSlideMenuViewController: UIViewController {
      
      - parameter sender: the sender
      */
-    func handleSwipes(_ sender:UISwipeGestureRecognizer) {
+    @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
         // determines swipe direction from input and acts accordingly
         if (sender.direction == .left) {
             toggle("left")
